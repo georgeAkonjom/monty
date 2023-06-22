@@ -19,14 +19,14 @@ int main(int argc, char *argv[])
 	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE %s file\n", argv[0]);
-		exit(EXIT_FAILURE);
+		pexit(EXIT_FAILURE);
 	}
 
 	bfile = fopen(argv[1], "r");
 	if (!bfile)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-		exit(EXIT_FAILURE);
+		pexit(EXIT_FAILURE);
 	}
 
 	while (fgets(comline, sizeof(comline), bfile))
@@ -35,10 +35,12 @@ int main(int argc, char *argv[])
 		for (vec_iter = 1; comvec[vec_iter - 1] != NULL; vec_iter++)
 			comvec[vec_iter] = strtok(NULL, delim);
 		line_num++;
-		com_handle(comvec, line_num);
+		if (comvec[0])
+			com_handle(comvec, line_num);
 	}
 
-	exit (EXIT_SUCCESS);
+	pexit(EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);
 }
 
 
@@ -56,28 +58,48 @@ void com_handle(char **comvec, unsigned int line_num)
 	int val;
 	instruction_t all_com[] = {{"push", push_inst}, {"pall", pall_inst}, {"pint", pint_inst}, {"swap", swap_inst}};
 
-	if (!comvec[1])
-		new_stack = NULL;
-	else
-	{
-		new_stack = malloc(sizeof(*new_stack));
-		if (!new_stack)
-		{
-			perror("malloc error");
-			exit(EXIT_FAILURE);
-		}
-
-		val = atoi(comvec[1]);
-		if (!val && *(comvec[1]) != '0')
-		{
-			exit(EXIT_FAILURE);
-		}
-		new_stack->n = val;
-		new_stack->prev = NULL;
-		new_stack->next = NULL;
-	}
-
 	for (iter = 0; iter < sizeof(all_com) / sizeof(instruction_t); iter++)
 		if (!strcmp(all_com[iter].opcode, comvec[0]))
+		{
+			if (!comvec[1])
+				new_stack = NULL;
+			else
+			{
+				new_stack = malloc(sizeof(*new_stack));
+				if (!new_stack)
+				{
+					fprintf(stderr,
+						"Error: malloc failed\n");
+					pexit(EXIT_FAILURE);
+				}
+				val = atoi(comvec[1]);
+				if (!val && *(comvec[1]) != '0')
+				{
+					fprintf(stderr,
+						"L%i: usage: push integer\n",
+						line_num);
+					pexit(EXIT_FAILURE);
+				}
+				new_stack->n = val;
+				new_stack->prev = NULL;
+				new_stack->next = NULL;
+			}
 			all_com[iter].f(&new_stack, line_num);
+			return;
+		}
+	fprintf(stderr, "L%i: unknown instruction %s\n", line_num, comvec[0]);
+	pexit(EXIT_FAILURE);
+}
+
+void pexit(int status)
+{
+	stack_t *curr, *head = main_stack;
+
+	while(head)
+	{
+		curr = head->next;
+		free(head);
+		head = curr;
+	}
+	exit(status);
 }
