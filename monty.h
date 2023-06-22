@@ -41,6 +41,7 @@ extern stack_t *main_stack;
 void com_handle(char **, unsigned int);
 void push_inst(stack_t **, unsigned int);
 void pall_inst(stack_t **, unsigned int);
+void pop_inst(stack_t **, unsigned int);
 void pexit(int);
 FILE *file_getset(FILE *);
 void pint_inst(stack_t **stack, unsigned int line_number);

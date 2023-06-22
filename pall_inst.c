@@ -12,7 +12,7 @@ void pall_inst(stack_t **new_stack,
 {
 	stack_t *h = main_stack;
 
-	if (*new_stack)
+	if (new_stack && *new_stack)
 		pexit(EXIT_FAILURE);
 	while (h)
 	{

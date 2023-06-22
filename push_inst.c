@@ -9,13 +9,14 @@
  */
 void push_inst(stack_t **new_stack, unsigned int line_number)
 {
-	stack_t *new = *new_stack;
+	stack_t *new;
 
-	if (!new)
+	if (!new_stack || !(*new_stack))
 	{
-		fprintf(stderr, "L%i: usage: push integer\n", line_number);
+		fprintf(stderr, "L%u: usage: push integer\n", line_number);
 		pexit(EXIT_FAILURE);
 	}
+	new = *new_stack;
 	new->prev = NULL;
 	new->next = main_stack;
 	if (main_stack)

@@ -14,7 +14,7 @@ void swap_inst(stack_t **stack, unsigned int line_number)
 	stack_t *top = main_stack;
 	int temp;
 
-	if (*stack)
+	if (stack && *stack)
 		pexit(EXIT_FAILURE);
 	if (top == NULL || top->next == NULL)
 	{

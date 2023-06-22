@@ -13,7 +13,7 @@ void pint_inst(stack_t **stack, unsigned int line_number)
 {
 	stack_t *top = main_stack;
 
-	if (*stack)
+	if (stack && *stack)
 		pexit(EXIT_FAILURE);
 	if (top == NULL)
 	{
