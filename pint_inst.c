@@ -13,6 +13,8 @@ void pint_inst(stack_t **stack, unsigned int line_number)
 {
 	stack_t *top = main_stack;
 
+	if (*stack)
+		pexit(EXIT_FAILURE);
 	if (top == NULL)
 	{
 		fprintf(stderr, "L%u: can't pint, stack empty\n", line_number);
