@@ -57,7 +57,7 @@ void com_handle(char **comvec, unsigned int line_num)
 	stack_t *new_stack;
 	int val;
 	instruction_t all_com[] = {{"push", push_inst}, {"pall", pall_inst},
-				   {"pint", pint_inst}, {"swap", swap_inst}};
+				   {"pint", pint_inst}, {"swap", swap_inst}, {"nop", nop_inst}};
 
 	for (iter = 0; iter < sizeof(all_com) / sizeof(instruction_t); iter++)
 		if (!strcmp(all_com[iter].opcode, comvec[0]))
