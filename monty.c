@@ -54,7 +54,7 @@ void com_handle(char **comvec, unsigned int line_num)
 	unsigned int iter;
 	stack_t *new_stack;
 	int val;
-	instruction_t all_com[] = {{"push", push_inst}, {"pall", pall_inst}};
+	instruction_t all_com[] = {{"push", push_inst}, {"pall", pall_inst}, {"pint", pint_inst}, {"swap", swap_inst}};
 
 	if (!comvec[1])
 		new_stack = NULL;
