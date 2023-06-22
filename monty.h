@@ -41,5 +41,6 @@ extern stack_t *main_stack;
 void com_handle(char **, unsigned int);
 void push_inst(stack_t **, unsigned int);
 void pall_inst(stack_t **, unsigned int);
+void pexit(int);
 
 #endif /* MONTY_H */

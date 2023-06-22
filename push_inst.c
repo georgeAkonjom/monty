@@ -7,13 +7,15 @@
  *
  * Return: Void (Nothing)
  */
-void push_inst(stack_t **new_stack,
-	       __attribute__((unused)) unsigned int line_number)
+void push_inst(stack_t **new_stack, unsigned int line_number)
 {
 	stack_t *new = *new_stack;
 
 	if (!new)
-		exit(EXIT_SUCCESS);
+	{
+		fprintf(stderr, "L%i: usage: push integer\n", line_number);
+		pexit(EXIT_FAILURE);
+	}
 	new->prev = NULL;
 	new->next = main_stack;
 	if (main_stack)

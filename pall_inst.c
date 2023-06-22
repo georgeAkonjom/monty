@@ -13,7 +13,7 @@ void pall_inst(stack_t **new_stack,
 	stack_t *h = main_stack;
 
 	if (*new_stack)
-		exit(EXIT_FAILURE);
+		pexit(EXIT_FAILURE);
 	while (h)
 	{
 		printf("%i\n", h->n);
