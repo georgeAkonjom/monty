@@ -13,9 +13,8 @@ stack_t *main_stack = NULL;
 int main(int argc, char *argv[])
 {
 	FILE *bfile = NULL;
-	char *comline = NULL, *comvec[256], *delim = " \t\n";
-	size_t comlen = 0, vec_iter = 0, line_num = 0;
-	ssize_t endof = -1;
+	char comline[256], *comvec[256], *delim = " \t\n";
+	size_t vec_iter = 0, line_num = 0;
 
 	if (argc != 2)
 	{
@@ -30,14 +29,14 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	while (getline(&comline, &comlen, bfile) != endof)
+	while (fgets(comline, sizeof(comline), bfile))
 	{
 		comvec[0] = strtok(comline, delim);
 		for (vec_iter = 1; comvec[vec_iter - 1] != NULL; vec_iter++)
 			comvec[vec_iter] = strtok(NULL, delim);
 		line_num++;
+		com_handle(comvec, line_num);
 	}
-	com_handle(comvec, line_num);
 
 	exit (EXIT_SUCCESS);
 }
