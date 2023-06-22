@@ -46,5 +46,6 @@ void pexit(int);
 FILE *file_getset(FILE *);
 void pint_inst(stack_t **stack, unsigned int line_number);
 void swap_inst(stack_t **stack, unsigned int line_number);
+void nop_inst(stack_t **stack, unsigned int line_number);
 
 #endif /* MONTY_H */
